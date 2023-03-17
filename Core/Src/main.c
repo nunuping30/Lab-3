@@ -48,15 +48,17 @@ DMA_HandleTypeDef hdma_tim2_ch1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+uint8_t MotorControlEnable = 0;
 
 uint32_t InputCaptureBuffer[IC_BUFFER_SIZE];
 float averageRisingedgePeriod;
 
-// set duty 100%  // 1% = ( set duty =5)
-uint32_t MotorSetDuty = 500;
+// set duty 100%  // 1% = ( set duty =1)
+float MotorSetDuty = 100;
 
 float MotorReadRPM;
+float MotorSetRPM;
+
 
 /* USER CODE END PV */
 
@@ -136,11 +138,36 @@ int main(void)
 	  if (HAL_GetTick() >= timestamp)
 	  {
 		  timestamp = HAL_GetTick() + 500;
-		  averageRisingedgePeriod = IC_Calc_Period();
-		  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
+		  //averageRisingedgePeriod = IC_Calc_Period();
+		  //MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
+
 /////////////////////////////////////////////////////////////////  Ex.1 end, 2 start
 		  // generate PWN
 		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
+		  averageRisingedgePeriod = IC_Calc_Period();
+		  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
+
+		  if (MotorControlEnable == 1)
+		  {
+
+			  if (MotorReadRPM > MotorSetRPM  )
+			  {
+				  MotorSetDuty -= 1;
+			  }
+
+			  else if (MotorReadRPM < MotorSetRPM )
+			  {
+				  MotorSetDuty += 1;
+			  }
+
+		  }
+
+//		  else if (MotorControlEnable == 0)
+//		  {
+//			  averageRisingedgePeriod = IC_Calc_Period();
+//			  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
+//		  }
+
 
 
   /////////////////////////////////////////////////////////////////  Ex.2 end
@@ -246,7 +273,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 50;
+  sConfigOC.Pulse = 100;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
