@@ -138,8 +138,6 @@ int main(void)
 	  if (HAL_GetTick() >= timestamp)
 	  {
 		  timestamp = HAL_GetTick() + 500;
-		  //averageRisingedgePeriod = IC_Calc_Period();
-		  //MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
 
 /////////////////////////////////////////////////////////////////  Ex.1 end, 2 start
 		  // generate PWN
@@ -150,7 +148,13 @@ int main(void)
 		  if (MotorControlEnable == 1)
 		  {
 
-			  if (MotorReadRPM > MotorSetRPM  )
+			  if (MotorSetRPM == 0)
+			  {
+				  MotorReadRPM = 0 ;
+				  MotorSetDuty = 0 ;
+			  }
+
+			  else if (MotorReadRPM > MotorSetRPM  )
 			  {
 				  MotorSetDuty -= 1;
 			  }
@@ -162,17 +166,11 @@ int main(void)
 
 		  }
 
-//		  else if (MotorControlEnable == 0)
-//		  {
-//			  averageRisingedgePeriod = IC_Calc_Period();
-//			  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
-//		  }
+		  else if ((MotorControlEnable == 0) && (MotorSetDuty == 0))
+		  {
+			  MotorReadRPM = 0;
 
-
-
-  /////////////////////////////////////////////////////////////////  Ex.2 end
-
-
+		  }
 
 	  }
 
