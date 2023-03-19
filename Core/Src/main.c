@@ -150,27 +150,74 @@ int main(void)
 
 			  if (MotorSetRPM == 0)
 			  {
+				  averageRisingedgePeriod = 0;
 				  MotorReadRPM = 0 ;
 				  MotorSetDuty = 0 ;
+
 			  }
 
-			  else if (MotorReadRPM > MotorSetRPM  )
+//			  else if (MotorSetDuty < 0)
+//			  {
+//				  MotorSetDuty = 0;
+//			  }
+//
+//			  else if (MotorSetDuty > 100)
+//			  {
+//				  MotorSetDuty = 100;
+//			  }
+
+			  else if (MotorReadRPM > MotorSetRPM )
 			  {
-				  MotorSetDuty -= 1;
+				  if (MotorSetDuty < 0)
+				  {
+					  MotorSetDuty = 0;
+				  }
+
+				  else if (MotorSetDuty > 0)
+				  {
+					  MotorSetDuty -= 1;
+				  }
+
 			  }
 
 			  else if (MotorReadRPM < MotorSetRPM )
 			  {
-				  MotorSetDuty += 1;
+
+				  if (MotorSetDuty > 100)
+				  {
+					  MotorSetDuty = 100;
+				  }
+
+				  else if (MotorSetDuty < 100)
+				  {
+					  MotorSetDuty += 1;
+				  }
 			  }
 
 		  }
 
-		  else if ((MotorControlEnable == 0) && (MotorSetDuty == 0))
+		  else if (MotorControlEnable == 0)
 		  {
-			  MotorReadRPM = 0;
+
+			  if (MotorSetDuty > 100)
+			  {
+				  MotorSetDuty = 100;
+			  }
+
+			  else if (MotorSetDuty < 0)
+			  {
+				  MotorSetDuty = 0;
+			  }
+
+			  else if (MotorSetDuty == 0)
+			  {
+				  MotorReadRPM = 0;
+				  averageRisingedgePeriod = 0;
+			  }
 
 		  }
+
+//		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
 
 	  }
 
