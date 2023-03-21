@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0001575f  00000000  00000000  00030598  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000db03  00000000  00000000  00045cf7  2**0
+ 17 .debug_line   0000daff  00000000  00000000  00045cf7  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008a1e3  00000000  00000000  000537fa  2**0
+ 18 .debug_str    0008a1e3  00000000  00000000  000537f6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000dd9dd  2**0
+ 19 .comment      00000050  00000000  00000000  000dd9d9  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003420  00000000  00000000  000dda30  2**2
+ 20 .debug_frame  00003420  00000000  00000000  000dda2c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1107,230 +1107,236 @@ int main(void)
 
 /////////////////////////////////////////////////////////////////  Ex.1 end, 2 start
 		  // generate PWN
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
- 8000d74:	4b70      	ldr	r3, [pc, #448]	; (8000f38 <main+0x220>)
- 8000d76:	edd3 7a00 	vldr	s15, [r3]
- 8000d7a:	4b6d      	ldr	r3, [pc, #436]	; (8000f30 <main+0x218>)
- 8000d7c:	681b      	ldr	r3, [r3, #0]
- 8000d7e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
- 8000d82:	ee17 2a90 	vmov	r2, s15
- 8000d86:	635a      	str	r2, [r3, #52]	; 0x34
+		  //__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
 		  averageRisingedgePeriod = IC_Calc_Period();
- 8000d88:	f000 fb1a 	bl	80013c0 <IC_Calc_Period>
- 8000d8c:	eef0 7a40 	vmov.f32	s15, s0
- 8000d90:	4b6a      	ldr	r3, [pc, #424]	; (8000f3c <main+0x224>)
- 8000d92:	edc3 7a00 	vstr	s15, [r3]
+ 8000d74:	f000 fb24 	bl	80013c0 <IC_Calc_Period>
+ 8000d78:	eef0 7a40 	vmov.f32	s15, s0
+ 8000d7c:	4b6e      	ldr	r3, [pc, #440]	; (8000f38 <main+0x220>)
+ 8000d7e:	edc3 7a00 	vstr	s15, [r3]
 		  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
- 8000d96:	4b69      	ldr	r3, [pc, #420]	; (8000f3c <main+0x224>)
- 8000d98:	edd3 7a00 	vldr	s15, [r3]
- 8000d9c:	ed9f 7a68 	vldr	s14, [pc, #416]	; 8000f40 <main+0x228>
- 8000da0:	ee67 7a87 	vmul.f32	s15, s15, s14
- 8000da4:	ee17 0a90 	vmov	r0, s15
- 8000da8:	f7ff fb7a 	bl	80004a0 <__aeabi_f2d>
- 8000dac:	a35c      	add	r3, pc, #368	; (adr r3, 8000f20 <main+0x208>)
- 8000dae:	e9d3 2300 	ldrd	r2, r3, [r3]
- 8000db2:	f7ff fbcd 	bl	8000550 <__aeabi_dmul>
- 8000db6:	4602      	mov	r2, r0
- 8000db8:	460b      	mov	r3, r1
- 8000dba:	f04f 0000 	mov.w	r0, #0
- 8000dbe:	4961      	ldr	r1, [pc, #388]	; (8000f44 <main+0x22c>)
- 8000dc0:	f7ff fcf0 	bl	80007a4 <__aeabi_ddiv>
- 8000dc4:	4602      	mov	r2, r0
- 8000dc6:	460b      	mov	r3, r1
- 8000dc8:	4610      	mov	r0, r2
- 8000dca:	4619      	mov	r1, r3
- 8000dcc:	f7ff fdd2 	bl	8000974 <__aeabi_d2f>
- 8000dd0:	4603      	mov	r3, r0
- 8000dd2:	4a5d      	ldr	r2, [pc, #372]	; (8000f48 <main+0x230>)
- 8000dd4:	6013      	str	r3, [r2, #0]
+ 8000d82:	4b6d      	ldr	r3, [pc, #436]	; (8000f38 <main+0x220>)
+ 8000d84:	edd3 7a00 	vldr	s15, [r3]
+ 8000d88:	ed9f 7a6c 	vldr	s14, [pc, #432]	; 8000f3c <main+0x224>
+ 8000d8c:	ee67 7a87 	vmul.f32	s15, s15, s14
+ 8000d90:	ee17 0a90 	vmov	r0, s15
+ 8000d94:	f7ff fb84 	bl	80004a0 <__aeabi_f2d>
+ 8000d98:	a361      	add	r3, pc, #388	; (adr r3, 8000f20 <main+0x208>)
+ 8000d9a:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8000d9e:	f7ff fbd7 	bl	8000550 <__aeabi_dmul>
+ 8000da2:	4602      	mov	r2, r0
+ 8000da4:	460b      	mov	r3, r1
+ 8000da6:	f04f 0000 	mov.w	r0, #0
+ 8000daa:	4965      	ldr	r1, [pc, #404]	; (8000f40 <main+0x228>)
+ 8000dac:	f7ff fcfa 	bl	80007a4 <__aeabi_ddiv>
+ 8000db0:	4602      	mov	r2, r0
+ 8000db2:	460b      	mov	r3, r1
+ 8000db4:	4610      	mov	r0, r2
+ 8000db6:	4619      	mov	r1, r3
+ 8000db8:	f7ff fddc 	bl	8000974 <__aeabi_d2f>
+ 8000dbc:	4603      	mov	r3, r0
+ 8000dbe:	4a61      	ldr	r2, [pc, #388]	; (8000f44 <main+0x22c>)
+ 8000dc0:	6013      	str	r3, [r2, #0]
 
 		  if (MotorControlEnable == 1)
- 8000dd6:	4b5d      	ldr	r3, [pc, #372]	; (8000f4c <main+0x234>)
- 8000dd8:	781b      	ldrb	r3, [r3, #0]
- 8000dda:	2b01      	cmp	r3, #1
- 8000ddc:	d16d      	bne.n	8000eba <main+0x1a2>
+ 8000dc2:	4b61      	ldr	r3, [pc, #388]	; (8000f48 <main+0x230>)
+ 8000dc4:	781b      	ldrb	r3, [r3, #0]
+ 8000dc6:	2b01      	cmp	r3, #1
+ 8000dc8:	d16d      	bne.n	8000ea6 <main+0x18e>
 		  {
 
 			  if (MotorSetRPM == 0)
- 8000dde:	4b5c      	ldr	r3, [pc, #368]	; (8000f50 <main+0x238>)
- 8000de0:	edd3 7a00 	vldr	s15, [r3]
- 8000de4:	eef5 7a40 	vcmp.f32	s15, #0.0
- 8000de8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000dec:	d10c      	bne.n	8000e08 <main+0xf0>
+ 8000dca:	4b60      	ldr	r3, [pc, #384]	; (8000f4c <main+0x234>)
+ 8000dcc:	edd3 7a00 	vldr	s15, [r3]
+ 8000dd0:	eef5 7a40 	vcmp.f32	s15, #0.0
+ 8000dd4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000dd8:	d10c      	bne.n	8000df4 <main+0xdc>
 			  {
 				  averageRisingedgePeriod = 0;
- 8000dee:	4b53      	ldr	r3, [pc, #332]	; (8000f3c <main+0x224>)
- 8000df0:	f04f 0200 	mov.w	r2, #0
- 8000df4:	601a      	str	r2, [r3, #0]
+ 8000dda:	4b57      	ldr	r3, [pc, #348]	; (8000f38 <main+0x220>)
+ 8000ddc:	f04f 0200 	mov.w	r2, #0
+ 8000de0:	601a      	str	r2, [r3, #0]
 				  MotorReadRPM = 0 ;
- 8000df6:	4b54      	ldr	r3, [pc, #336]	; (8000f48 <main+0x230>)
- 8000df8:	f04f 0200 	mov.w	r2, #0
- 8000dfc:	601a      	str	r2, [r3, #0]
+ 8000de2:	4b58      	ldr	r3, [pc, #352]	; (8000f44 <main+0x22c>)
+ 8000de4:	f04f 0200 	mov.w	r2, #0
+ 8000de8:	601a      	str	r2, [r3, #0]
 				  MotorSetDuty = 0 ;
- 8000dfe:	4b4e      	ldr	r3, [pc, #312]	; (8000f38 <main+0x220>)
- 8000e00:	f04f 0200 	mov.w	r2, #0
- 8000e04:	601a      	str	r2, [r3, #0]
- 8000e06:	e7a7      	b.n	8000d58 <main+0x40>
+ 8000dea:	4b59      	ldr	r3, [pc, #356]	; (8000f50 <main+0x238>)
+ 8000dec:	f04f 0200 	mov.w	r2, #0
+ 8000df0:	601a      	str	r2, [r3, #0]
+ 8000df2:	e087      	b.n	8000f04 <main+0x1ec>
 //			  else if (MotorSetDuty > 100)
 //			  {
 //				  MotorSetDuty = 100;
 //			  }
 
 			  else if (MotorReadRPM > MotorSetRPM )
- 8000e08:	4b4f      	ldr	r3, [pc, #316]	; (8000f48 <main+0x230>)
- 8000e0a:	ed93 7a00 	vldr	s14, [r3]
- 8000e0e:	4b50      	ldr	r3, [pc, #320]	; (8000f50 <main+0x238>)
- 8000e10:	edd3 7a00 	vldr	s15, [r3]
- 8000e14:	eeb4 7ae7 	vcmpe.f32	s14, s15
- 8000e18:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000e1c:	dd1f      	ble.n	8000e5e <main+0x146>
+ 8000df4:	4b53      	ldr	r3, [pc, #332]	; (8000f44 <main+0x22c>)
+ 8000df6:	ed93 7a00 	vldr	s14, [r3]
+ 8000dfa:	4b54      	ldr	r3, [pc, #336]	; (8000f4c <main+0x234>)
+ 8000dfc:	edd3 7a00 	vldr	s15, [r3]
+ 8000e00:	eeb4 7ae7 	vcmpe.f32	s14, s15
+ 8000e04:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e08:	dd1f      	ble.n	8000e4a <main+0x132>
 			  {
 				  if (MotorSetDuty < 0)
- 8000e1e:	4b46      	ldr	r3, [pc, #280]	; (8000f38 <main+0x220>)
- 8000e20:	edd3 7a00 	vldr	s15, [r3]
- 8000e24:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 8000e28:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000e2c:	d504      	bpl.n	8000e38 <main+0x120>
+ 8000e0a:	4b51      	ldr	r3, [pc, #324]	; (8000f50 <main+0x238>)
+ 8000e0c:	edd3 7a00 	vldr	s15, [r3]
+ 8000e10:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 8000e14:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e18:	d504      	bpl.n	8000e24 <main+0x10c>
 				  {
 					  MotorSetDuty = 0;
- 8000e2e:	4b42      	ldr	r3, [pc, #264]	; (8000f38 <main+0x220>)
- 8000e30:	f04f 0200 	mov.w	r2, #0
- 8000e34:	601a      	str	r2, [r3, #0]
- 8000e36:	e78f      	b.n	8000d58 <main+0x40>
+ 8000e1a:	4b4d      	ldr	r3, [pc, #308]	; (8000f50 <main+0x238>)
+ 8000e1c:	f04f 0200 	mov.w	r2, #0
+ 8000e20:	601a      	str	r2, [r3, #0]
+ 8000e22:	e06f      	b.n	8000f04 <main+0x1ec>
 				  }
 
 				  else if (MotorSetDuty > 0)
- 8000e38:	4b3f      	ldr	r3, [pc, #252]	; (8000f38 <main+0x220>)
- 8000e3a:	edd3 7a00 	vldr	s15, [r3]
- 8000e3e:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 8000e42:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000e46:	dd69      	ble.n	8000f1c <main+0x204>
+ 8000e24:	4b4a      	ldr	r3, [pc, #296]	; (8000f50 <main+0x238>)
+ 8000e26:	edd3 7a00 	vldr	s15, [r3]
+ 8000e2a:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 8000e2e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e32:	dd67      	ble.n	8000f04 <main+0x1ec>
 				  {
 					  MotorSetDuty -= 1;
- 8000e48:	4b3b      	ldr	r3, [pc, #236]	; (8000f38 <main+0x220>)
- 8000e4a:	edd3 7a00 	vldr	s15, [r3]
- 8000e4e:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
- 8000e52:	ee77 7ac7 	vsub.f32	s15, s15, s14
- 8000e56:	4b38      	ldr	r3, [pc, #224]	; (8000f38 <main+0x220>)
- 8000e58:	edc3 7a00 	vstr	s15, [r3]
- 8000e5c:	e77c      	b.n	8000d58 <main+0x40>
+ 8000e34:	4b46      	ldr	r3, [pc, #280]	; (8000f50 <main+0x238>)
+ 8000e36:	edd3 7a00 	vldr	s15, [r3]
+ 8000e3a:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
+ 8000e3e:	ee77 7ac7 	vsub.f32	s15, s15, s14
+ 8000e42:	4b43      	ldr	r3, [pc, #268]	; (8000f50 <main+0x238>)
+ 8000e44:	edc3 7a00 	vstr	s15, [r3]
+ 8000e48:	e05c      	b.n	8000f04 <main+0x1ec>
 				  }
 
 			  }
 
 			  else if (MotorReadRPM < MotorSetRPM )
- 8000e5e:	4b3a      	ldr	r3, [pc, #232]	; (8000f48 <main+0x230>)
- 8000e60:	ed93 7a00 	vldr	s14, [r3]
- 8000e64:	4b3a      	ldr	r3, [pc, #232]	; (8000f50 <main+0x238>)
- 8000e66:	edd3 7a00 	vldr	s15, [r3]
- 8000e6a:	eeb4 7ae7 	vcmpe.f32	s14, s15
- 8000e6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000e72:	d553      	bpl.n	8000f1c <main+0x204>
+ 8000e4a:	4b3e      	ldr	r3, [pc, #248]	; (8000f44 <main+0x22c>)
+ 8000e4c:	ed93 7a00 	vldr	s14, [r3]
+ 8000e50:	4b3e      	ldr	r3, [pc, #248]	; (8000f4c <main+0x234>)
+ 8000e52:	edd3 7a00 	vldr	s15, [r3]
+ 8000e56:	eeb4 7ae7 	vcmpe.f32	s14, s15
+ 8000e5a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e5e:	d551      	bpl.n	8000f04 <main+0x1ec>
 			  {
 
 				  if (MotorSetDuty > 100)
- 8000e74:	4b30      	ldr	r3, [pc, #192]	; (8000f38 <main+0x220>)
- 8000e76:	edd3 7a00 	vldr	s15, [r3]
- 8000e7a:	ed9f 7a36 	vldr	s14, [pc, #216]	; 8000f54 <main+0x23c>
- 8000e7e:	eef4 7ac7 	vcmpe.f32	s15, s14
- 8000e82:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000e86:	dd03      	ble.n	8000e90 <main+0x178>
+ 8000e60:	4b3b      	ldr	r3, [pc, #236]	; (8000f50 <main+0x238>)
+ 8000e62:	edd3 7a00 	vldr	s15, [r3]
+ 8000e66:	ed9f 7a3b 	vldr	s14, [pc, #236]	; 8000f54 <main+0x23c>
+ 8000e6a:	eef4 7ac7 	vcmpe.f32	s15, s14
+ 8000e6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e72:	dd03      	ble.n	8000e7c <main+0x164>
 				  {
 					  MotorSetDuty = 100;
- 8000e88:	4b2b      	ldr	r3, [pc, #172]	; (8000f38 <main+0x220>)
- 8000e8a:	4a33      	ldr	r2, [pc, #204]	; (8000f58 <main+0x240>)
- 8000e8c:	601a      	str	r2, [r3, #0]
- 8000e8e:	e763      	b.n	8000d58 <main+0x40>
+ 8000e74:	4b36      	ldr	r3, [pc, #216]	; (8000f50 <main+0x238>)
+ 8000e76:	4a38      	ldr	r2, [pc, #224]	; (8000f58 <main+0x240>)
+ 8000e78:	601a      	str	r2, [r3, #0]
+ 8000e7a:	e043      	b.n	8000f04 <main+0x1ec>
 				  }
 
 				  else if (MotorSetDuty < 100)
- 8000e90:	4b29      	ldr	r3, [pc, #164]	; (8000f38 <main+0x220>)
- 8000e92:	edd3 7a00 	vldr	s15, [r3]
- 8000e96:	ed9f 7a2f 	vldr	s14, [pc, #188]	; 8000f54 <main+0x23c>
- 8000e9a:	eef4 7ac7 	vcmpe.f32	s15, s14
- 8000e9e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000ea2:	d53b      	bpl.n	8000f1c <main+0x204>
+ 8000e7c:	4b34      	ldr	r3, [pc, #208]	; (8000f50 <main+0x238>)
+ 8000e7e:	edd3 7a00 	vldr	s15, [r3]
+ 8000e82:	ed9f 7a34 	vldr	s14, [pc, #208]	; 8000f54 <main+0x23c>
+ 8000e86:	eef4 7ac7 	vcmpe.f32	s15, s14
+ 8000e8a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000e8e:	d539      	bpl.n	8000f04 <main+0x1ec>
 				  {
 					  MotorSetDuty += 1;
- 8000ea4:	4b24      	ldr	r3, [pc, #144]	; (8000f38 <main+0x220>)
- 8000ea6:	edd3 7a00 	vldr	s15, [r3]
- 8000eaa:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
- 8000eae:	ee77 7a87 	vadd.f32	s15, s15, s14
- 8000eb2:	4b21      	ldr	r3, [pc, #132]	; (8000f38 <main+0x220>)
- 8000eb4:	edc3 7a00 	vstr	s15, [r3]
- 8000eb8:	e74e      	b.n	8000d58 <main+0x40>
+ 8000e90:	4b2f      	ldr	r3, [pc, #188]	; (8000f50 <main+0x238>)
+ 8000e92:	edd3 7a00 	vldr	s15, [r3]
+ 8000e96:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
+ 8000e9a:	ee77 7a87 	vadd.f32	s15, s15, s14
+ 8000e9e:	4b2c      	ldr	r3, [pc, #176]	; (8000f50 <main+0x238>)
+ 8000ea0:	edc3 7a00 	vstr	s15, [r3]
+ 8000ea4:	e02e      	b.n	8000f04 <main+0x1ec>
 				  }
 			  }
 
 		  }
 
 		  else if (MotorControlEnable == 0)
- 8000eba:	4b24      	ldr	r3, [pc, #144]	; (8000f4c <main+0x234>)
- 8000ebc:	781b      	ldrb	r3, [r3, #0]
- 8000ebe:	2b00      	cmp	r3, #0
- 8000ec0:	f47f af4a 	bne.w	8000d58 <main+0x40>
+ 8000ea6:	4b28      	ldr	r3, [pc, #160]	; (8000f48 <main+0x230>)
+ 8000ea8:	781b      	ldrb	r3, [r3, #0]
+ 8000eaa:	2b00      	cmp	r3, #0
+ 8000eac:	d12a      	bne.n	8000f04 <main+0x1ec>
 		  {
 
 			  if (MotorSetDuty > 100)
- 8000ec4:	4b1c      	ldr	r3, [pc, #112]	; (8000f38 <main+0x220>)
- 8000ec6:	edd3 7a00 	vldr	s15, [r3]
- 8000eca:	ed9f 7a22 	vldr	s14, [pc, #136]	; 8000f54 <main+0x23c>
- 8000ece:	eef4 7ac7 	vcmpe.f32	s15, s14
- 8000ed2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000ed6:	dd03      	ble.n	8000ee0 <main+0x1c8>
+ 8000eae:	4b28      	ldr	r3, [pc, #160]	; (8000f50 <main+0x238>)
+ 8000eb0:	edd3 7a00 	vldr	s15, [r3]
+ 8000eb4:	ed9f 7a27 	vldr	s14, [pc, #156]	; 8000f54 <main+0x23c>
+ 8000eb8:	eef4 7ac7 	vcmpe.f32	s15, s14
+ 8000ebc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000ec0:	dd03      	ble.n	8000eca <main+0x1b2>
 			  {
 				  MotorSetDuty = 100;
- 8000ed8:	4b17      	ldr	r3, [pc, #92]	; (8000f38 <main+0x220>)
- 8000eda:	4a1f      	ldr	r2, [pc, #124]	; (8000f58 <main+0x240>)
- 8000edc:	601a      	str	r2, [r3, #0]
- 8000ede:	e73b      	b.n	8000d58 <main+0x40>
+ 8000ec2:	4b23      	ldr	r3, [pc, #140]	; (8000f50 <main+0x238>)
+ 8000ec4:	4a24      	ldr	r2, [pc, #144]	; (8000f58 <main+0x240>)
+ 8000ec6:	601a      	str	r2, [r3, #0]
+ 8000ec8:	e01c      	b.n	8000f04 <main+0x1ec>
 			  }
 
 			  else if (MotorSetDuty < 0)
- 8000ee0:	4b15      	ldr	r3, [pc, #84]	; (8000f38 <main+0x220>)
- 8000ee2:	edd3 7a00 	vldr	s15, [r3]
- 8000ee6:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 8000eea:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000eee:	d504      	bpl.n	8000efa <main+0x1e2>
+ 8000eca:	4b21      	ldr	r3, [pc, #132]	; (8000f50 <main+0x238>)
+ 8000ecc:	edd3 7a00 	vldr	s15, [r3]
+ 8000ed0:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 8000ed4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000ed8:	d504      	bpl.n	8000ee4 <main+0x1cc>
 			  {
 				  MotorSetDuty = 0;
- 8000ef0:	4b11      	ldr	r3, [pc, #68]	; (8000f38 <main+0x220>)
- 8000ef2:	f04f 0200 	mov.w	r2, #0
- 8000ef6:	601a      	str	r2, [r3, #0]
- 8000ef8:	e72e      	b.n	8000d58 <main+0x40>
+ 8000eda:	4b1d      	ldr	r3, [pc, #116]	; (8000f50 <main+0x238>)
+ 8000edc:	f04f 0200 	mov.w	r2, #0
+ 8000ee0:	601a      	str	r2, [r3, #0]
+ 8000ee2:	e00f      	b.n	8000f04 <main+0x1ec>
 			  }
 
 			  else if (MotorSetDuty == 0)
- 8000efa:	4b0f      	ldr	r3, [pc, #60]	; (8000f38 <main+0x220>)
- 8000efc:	edd3 7a00 	vldr	s15, [r3]
- 8000f00:	eef5 7a40 	vcmp.f32	s15, #0.0
- 8000f04:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000f08:	f47f af26 	bne.w	8000d58 <main+0x40>
+ 8000ee4:	4b1a      	ldr	r3, [pc, #104]	; (8000f50 <main+0x238>)
+ 8000ee6:	edd3 7a00 	vldr	s15, [r3]
+ 8000eea:	eef5 7a40 	vcmp.f32	s15, #0.0
+ 8000eee:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8000ef2:	d107      	bne.n	8000f04 <main+0x1ec>
 			  {
 				  MotorReadRPM = 0;
- 8000f0c:	4b0e      	ldr	r3, [pc, #56]	; (8000f48 <main+0x230>)
- 8000f0e:	f04f 0200 	mov.w	r2, #0
- 8000f12:	601a      	str	r2, [r3, #0]
+ 8000ef4:	4b13      	ldr	r3, [pc, #76]	; (8000f44 <main+0x22c>)
+ 8000ef6:	f04f 0200 	mov.w	r2, #0
+ 8000efa:	601a      	str	r2, [r3, #0]
 				  averageRisingedgePeriod = 0;
- 8000f14:	4b09      	ldr	r3, [pc, #36]	; (8000f3c <main+0x224>)
- 8000f16:	f04f 0200 	mov.w	r2, #0
- 8000f1a:	601a      	str	r2, [r3, #0]
+ 8000efc:	4b0e      	ldr	r3, [pc, #56]	; (8000f38 <main+0x220>)
+ 8000efe:	f04f 0200 	mov.w	r2, #0
+ 8000f02:	601a      	str	r2, [r3, #0]
+			  }
+
+		  }
+
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
+ 8000f04:	4b12      	ldr	r3, [pc, #72]	; (8000f50 <main+0x238>)
+ 8000f06:	edd3 7a00 	vldr	s15, [r3]
+ 8000f0a:	4b09      	ldr	r3, [pc, #36]	; (8000f30 <main+0x218>)
+ 8000f0c:	681b      	ldr	r3, [r3, #0]
+ 8000f0e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+ 8000f12:	ee17 2a90 	vmov	r2, s15
+ 8000f16:	635a      	str	r2, [r3, #52]	; 0x34
   {
- 8000f1c:	e71c      	b.n	8000d58 <main+0x40>
- 8000f1e:	bf00      	nop
+ 8000f18:	e71e      	b.n	8000d58 <main+0x40>
+ 8000f1a:	bf00      	nop
+ 8000f1c:	f3af 8000 	nop.w
  8000f20:	a0b5ed8d 	.word	0xa0b5ed8d
  8000f24:	3eb0c6f7 	.word	0x3eb0c6f7
  8000f28:	20000074 	.word	0x20000074
  8000f2c:	20000164 	.word	0x20000164
  8000f30:	2000002c 	.word	0x2000002c
  8000f34:	200001c0 	.word	0x200001c0
- 8000f38:	20000000 	.word	0x20000000
- 8000f3c:	200001b4 	.word	0x200001b4
- 8000f40:	44400000 	.word	0x44400000
- 8000f44:	404e0000 	.word	0x404e0000
- 8000f48:	200001b8 	.word	0x200001b8
- 8000f4c:	20000160 	.word	0x20000160
- 8000f50:	200001bc 	.word	0x200001bc
+ 8000f38:	200001b4 	.word	0x200001b4
+ 8000f3c:	44400000 	.word	0x44400000
+ 8000f40:	404e0000 	.word	0x404e0000
+ 8000f44:	200001b8 	.word	0x200001b8
+ 8000f48:	20000160 	.word	0x20000160
+ 8000f4c:	200001bc 	.word	0x200001bc
+ 8000f50:	20000000 	.word	0x20000000
  8000f54:	42c80000 	.word	0x42c80000
  8000f58:	42c80000 	.word	0x42c80000
 

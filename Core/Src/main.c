@@ -141,7 +141,7 @@ int main(void)
 
 /////////////////////////////////////////////////////////////////  Ex.1 end, 2 start
 		  // generate PWN
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
+		  //__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
 		  averageRisingedgePeriod = IC_Calc_Period();
 		  MotorReadRPM = 60 / ( 64 * 12 * averageRisingedgePeriod * 0.000001);
 
@@ -217,7 +217,7 @@ int main(void)
 
 		  }
 
-//		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,MotorSetDuty);
 
 	  }
 
